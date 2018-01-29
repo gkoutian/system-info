@@ -1,5 +1,6 @@
 section {
     padding: 18px;
+    padding-top: 22px;
 }
 
 .bar {
@@ -13,6 +14,34 @@ section {
     display: flex;
     justify-content: space-between;
     margin-bottom: 5px
+}
+
+.data {
+    margin-top: 20px;
+    display: flex;
+    height: 90px;
+    justify-content: space-around;
+    box-sizing: border-box;
+}
+
+.data-item { 
+    height: 90px;
+    width: 30%;
+    display: flex;
+    position: relative;
+    flex-direction: column;
+    align-items: center;
+    box-sizing: border-box;
+}
+
+.data-item h6 {
+    margin-top: 10px;
+}
+
+.data-item h5 {
+    position: absolute;
+    top: 40%;
+    font-size: 24px
 }
 
 h4, h6 {
@@ -56,4 +85,38 @@ h6 {
 
 .batterybar {
     background-color: #00ffbf;
+}
+
+.pie-chart-slice {
+    stroke-width: 0
+}
+
+@media screen and (min-width: 600px) {
+    .content {
+        display: flex;
+        
+        width: 70%;
+        margin: 0 auto;
+        flex-wrap: wrap;
+    }
+
+    section {
+        width: 40%;
+        border: 3px solid #212230;
+        margin: 15px;
+        border-radius: 10px; 
+    }
+
+    svg {
+        width: 70%;
+        margin-left: 20px
+    }
+
+    .data-item h5 {
+        position: absolute;
+        top: 35%;
+        margin-left: 5px;
+        font-size: 20px
+    }
+
 }

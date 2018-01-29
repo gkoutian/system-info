@@ -1,15 +1,20 @@
 import React, { Component } from 'react';
 import './App.css';
 import Menu from './components/menu'
+import PieChart from 'react-minimal-pie-chart';
 
 class App extends Component {
 
-  componentDidMount() {
+  getData() {
     fetch('http://10.0.0.253:5000/api')
       .then(data => data.json())
       .then(data => {
         this.setState(data);
       })
+  }
+
+  componentDidMount() {
+    this.getData()
   }
 
   componentDidUpdate() {
@@ -31,9 +36,13 @@ class App extends Component {
       "memtotal": 0,
       "memfree": 0,
       "memused": 0,
-      "gfxname": "Intel(R) HD Graphics 4000",
-      "gfxram": 2,
-      "disks":[]
+      "gfxname": "",
+      "gfxram": 0,
+      "disks":[{
+        "total": 0,
+        "used": 0,
+        "percent": 0
+      }]
     }
   }
 
@@ -41,12 +50,37 @@ class App extends Component {
     return (
       <div className="App">
         <Menu />
+        <div className="content">        
         <section>
           <div className="info">
-              <h4>CPU <span>at {this.state.cpuspeed} GHz</span></h4>
+            <h4>CPU <span>at {this.state.cpuspeed} GHz</span></h4>
           </div>
-          <h4>Temperature: {this.state.cputemperature}°</h4>
-          <h4>Load: {this.state.cpuload}%</h4>
+          <div className="data">
+            <div className="data-item">
+              <PieChart
+                data={[
+                  { value: this.state.cpuload, key: 1, color: '#009af3' },
+                  { value: 100 - this.state.cpuload , key: 2, color: '#424251' },
+                ]}
+                startAngle={-90}
+                lineWidth={10}
+              />
+              <h5>{this.state.cpuload} %</h5>
+              <h6>Load</h6>
+            </div>
+            <div className="data-item">
+              <PieChart
+                data={[
+                  { value: this.state.cputemperature, key: 1, color: '#ff3756' },
+                  { value: 100 - this.state.cputemperature, key: 2, color: '#424251' },
+                ]}
+                startAngle={-90}
+                lineWidth={10}
+              />
+              <h5>{this.state.cputemperature} °</h5>
+              <h6>Temperature</h6>
+            </div>
+          </div>
         </section>
         <section>
           <h4>GPU</h4>
@@ -91,6 +125,7 @@ class App extends Component {
           :
              null
         }
+        </div>
       </div>
     );
   }
