@@ -1,0 +1,11 @@
+.menu {
+    text-align: center;
+    background-color: #212230;
+    color: white;
+    padding: 18px
+}
+
+.menu h1 {
+    margin: 0;
+    font-size: 18px;
+}

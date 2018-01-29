@@ -1,0 +1,59 @@
+section {
+    padding: 18px;
+}
+
+.bar {
+    width: 100%;
+    height: 6px;
+    border-radius: 5px;
+    background-color: #424251
+}
+
+.info {
+    display: flex;
+    justify-content: space-between;
+    margin-bottom: 5px
+}
+
+h4, h6 {
+    font-size: 16px;
+}
+
+h4 span {
+    opacity: 0.9;
+    font-weight: 100;
+}
+
+h6 {
+    font-weight: 100;
+    opacity: 0.9
+}
+.rambar, .drivebar, .drivebar, .batterybar {
+    position: relative;
+    top: 6px;
+    width: 0%
+}
+
+.rambar {
+    background-color: #fae47b;
+}
+
+#drivebar0 {
+    background-color: #ee37d2;
+}
+
+#drivebar1 {
+    background-color: #f09145;
+}
+
+#drivebar2 {
+    background-color: #009af3;
+}
+
+#drivebar3 {
+    background-color: #ff3756;
+}
+
+.batterybar {
+    background-color: #00ffbf;
+}
