@@ -19,7 +19,10 @@ class App extends Component {
 
   componentDidUpdate() {
     document.getElementById("ram").style.width = ((this.state.memused * 100) / this.state.memtotal) + '%';
-    document.getElementById("battery").style.width = this.state.batpercentage + '%';
+    if (this.state.batcharging !== undefined) {
+      document.getElementById("battery").style.width = this.state.batpercentage + '%';}
+    if (this.state.nvidia == true) {
+      document.getElementById("gpu").style.width = this.state.nvidia_mem_percent + '%';}
     this.state.disks.map((item, key) => {
       let itemid = 'drivebar' + key;
       document.getElementById(itemid).style.width = item.percent + '%';
@@ -42,7 +45,8 @@ class App extends Component {
         "total": 0,
         "used": 0,
         "percent": 0
-      }]
+      }],
+      "nvidia": false
     }
   }
 
@@ -82,9 +86,78 @@ class App extends Component {
             </div>
           </div>
         </section>
-        <section>
-          <h4>GPU</h4>
+        <section className="gfx"> 
+          
+          {
+            !this.state.nvidia 
+            ?
+              <div>
+              <div className="info">
+                <h4>GPU</h4>
+              </div>
+              <h6>Name: {this.state.gfxname}</h6>
+              <h6>Vram: {this.state.gfxram} Gb</h6>
+              </div>
+            :
+            <div>
+              <div className="info">
+                <h4>GPU <span>{this.state.nvidia_name}</span></h4>
+              </div>
+              <div className="data">
+                <div className="data-item">
+                  <PieChart
+                    data={[
+                      { value: this.state.nvidia_load, key: 1, color: '#00ffbf' },
+                      { value: 100 - this.state.nvidia_load , key: 2, color: '#424251' },
+                    ]}
+                    startAngle={-90}
+                    lineWidth={10}
+                  />
+                  <h5>{this.state.nvidia_load} %</h5>
+                  <h6>Load</h6>
+                </div>
+                <div className="data-item">
+                  <PieChart
+                    data={[
+                      { value: this.state.nvidia_temp, key: 1, color: '#ff3756' },
+                      { value: 100 - this.state.nvidia_temp, key: 2, color: '#424251' },
+                    ]}
+                    startAngle={-90}
+                    lineWidth={10}
+                  />
+                  <h5>{this.state.nvidia_temp} °</h5>
+                  <h6>Temperature</h6>
+                </div>
+                <div className="data-item">
+                  <PieChart
+                    data={[
+                      { value: this.state.nvidia_fan, key: 1, color: '#f09145' },
+                      { value: 100 - this.state.nvidia_fan, key: 2, color: '#424251' },
+                    ]}
+                    startAngle={-90}
+                    lineWidth={10}
+                  />
+                  <h5>{this.state.nvidia_fan} %</h5>
+                  <h6>Fan</h6>
+                </div>
+              </div>
+            </div>  
+          }
+          
         </section>
+        { this.state.nvidia === true 
+          ?
+            <section className="gfx">
+              <div className="info">
+                <h4>GPU RAM</h4>
+                <h6>{this.state.nvidia_mem_used} of {this.state.nvidia_mem_total} gb</h6>
+              </div>
+              <div className="bar batterybar" id="gpu"></div>
+              <div className="bar"></div>
+            </section>
+          :
+             null
+        }
         <section>
           <div className="info">
             <h4>RAM</h4>

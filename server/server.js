@@ -1,8 +1,9 @@
-var express = require('express');
-var app = express();
-var path = require('path');
-var cors = require('cors');
+const express = require('express');
+const app = express();
+const path = require('path');
+const cors = require('cors');
 const si = require('systeminformation');
+const smi = require('node-nvidia-smi');
 var result = {}
 
 app.use(cors())
@@ -53,9 +54,25 @@ app.get('/api', function(req, res) {
         })
         .then(data => {
             result.cpuload = Math.round(data.currentload)
-            res.json(result)
+            smi(function (err, data) {
+                if (err) {
+                    result.nvidia = false
+                    res.json(result)
+                } else {
+                    var info = data.nvidia_smi_log.gpu
+                    result.nvidia = true
+                    result.nvidia_name = info.product_name
+                    result.nvidia_fan = Number(info.fan_speed.split(' ')[0])
+                    result.nvidia_mem_total = Number(info.fb_memory_usage.total.split(' ')[0])
+                    result.nvidia_mem_used = Number(info.fb_memory_usage.used.split(' ')[0])
+                    result.nvidia_mem_free = Number(info.fb_memory_usage.free.split(' ')[0])
+                    result.nvidia_mem_percent = Number(info.utilization.memory_util.split(' ')[0])
+                    result.nvidia_load = Number(info.utilization.gpu_util.split(' ')[0])
+                    result.nvidia_temp = Number(info.temperature.gpu_temp.split(' ')[0])
+                    res.json(result)
+                }
+            })
         })
-
 })
 
 app.listen(5000, function () {

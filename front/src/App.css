@@ -9,7 +9,9 @@ section {
     border-radius: 5px;
     background-color: #424251
 }
-
+.gfx {
+    margin-top: 20px
+}
 .info {
     display: flex;
     justify-content: space-between;
