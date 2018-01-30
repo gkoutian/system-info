@@ -6,7 +6,7 @@ import PieChart from 'react-minimal-pie-chart';
 class App extends Component {
 
   getData() {
-    fetch('http://10.0.0.253:5000/api')
+    fetch('/api')
       .then(data => data.json())
       .then(data => {
         this.setState(data);

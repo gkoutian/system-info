@@ -7,6 +7,7 @@ const smi = require('node-nvidia-smi');
 var result = {}
 
 app.use(cors())
+app.use(express.static('public'))
 
 // viewed at http://localhost:8080
 app.get('/', function(req, res) {
