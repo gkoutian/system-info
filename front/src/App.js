@@ -15,13 +15,20 @@ class App extends Component {
 
   componentDidMount() {
     this.getData()
+    setInterval(function() {
+      fetch('/api')
+      .then(data => data.json())
+      .then(data => {
+        this.setState(data);
+      })
+    }.bind(this), 5000);
   }
 
   componentDidUpdate() {
     document.getElementById("ram").style.width = ((this.state.memused * 100) / this.state.memtotal) + '%';
     if (this.state.batcharging !== undefined) {
       document.getElementById("battery").style.width = this.state.batpercentage + '%';}
-    if (this.state.nvidia == true) {
+    if (this.state.nvidia === true) {
       document.getElementById("gpu").style.width = this.state.nvidia_mem_percent + '%';}
     this.state.disks.map((item, key) => {
       let itemid = 'drivebar' + key;

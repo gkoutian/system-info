@@ -8,7 +8,7 @@
   },
   "pkg": {
     "assets": "public/**/*"
-  }
+  },
   "keywords": [],
   "author": "",
   "license": "ISC",
