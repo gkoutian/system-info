@@ -6,7 +6,7 @@ import PieChart from 'react-minimal-pie-chart';
 class App extends Component {
 
   getData() {
-    fetch('/api')
+    fetch('http://localhost:5000/api')
       .then(data => data.json())
       .then(data => {
         this.setState(data);
@@ -16,7 +16,7 @@ class App extends Component {
   componentDidMount() {
     this.getData()
     setInterval(function() {
-      fetch('/api')
+      fetch('http://localhost:5000/api')
       .then(data => data.json())
       .then(data => {
         this.setState(data);
@@ -61,7 +61,7 @@ class App extends Component {
     return (
       <div className="App">
         <Menu />
-        <div className="content">        
+        <div className="content">
         <section>
           <div className="info">
             <h4>CPU <span>at {this.state.cpuspeed} GHz</span></h4>
@@ -93,10 +93,10 @@ class App extends Component {
             </div>
           </div>
         </section>
-        <section className="gfx"> 
-          
+        <section className="gfx">
+
           {
-            !this.state.nvidia 
+            !this.state.nvidia
             ?
               <div>
               <div className="info">
@@ -148,11 +148,11 @@ class App extends Component {
                   <h6>Fan</h6>
                 </div>
               </div>
-            </div>  
+            </div>
           }
-          
+
         </section>
-        { this.state.nvidia === true 
+        { this.state.nvidia === true
           ?
             <section className="gfx">
               <div className="info">
@@ -185,7 +185,7 @@ class App extends Component {
               <div className="bar"></div>
             </section>)
         })}
-        { this.state.batcharging !== undefined 
+        { this.state.batcharging !== undefined
           ?
             <section>
               <div className="info">
@@ -196,7 +196,7 @@ class App extends Component {
                     :
                       <h4>BATTERY</h4>
                 }
-                
+
                 <h6>{this.state.batpercentage}%</h6>
               </div>
               <div className="bar batterybar" id="battery"></div>

@@ -16,6 +16,6 @@
     "cors": "^2.8.4",
     "express": "^4.16.2",
     "node-nvidia-smi": "^1.0.0",
-    "systeminformation": "^3.33.18"
+    "systeminformation": ">=5.6.4"
   }
 }

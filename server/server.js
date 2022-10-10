@@ -15,7 +15,7 @@ app.get('/', function(req, res) {
 });
 
 app.get('/api', function(req, res) {
-    si.cpuCurrentspeed()
+    si.cpuCurrentSpeed()
         .then(data => {
             result.cpuspeed = data.avg
             return si.cpuTemperature()
@@ -38,8 +38,13 @@ app.get('/api', function(req, res) {
             return si.graphics()
         })
         .then(data => {
-            result.gfxname = data.controllers[0].model 
-            result.gfxram = Math.round(data.controllers[0].vram / 1024)
+            if (data.controllers.length > 0) {
+                result.gfxname =  data.controllers[0].model
+                result.gfxram = Math.round(data.controllers[0].vram / 1024)
+            } else {
+                result.gfxname =  ''
+                result.gfxram = 0
+            }
             return si.fsSize()
         })
         .then(data => {
@@ -54,7 +59,7 @@ app.get('/api', function(req, res) {
             return si.currentLoad()
         })
         .then(data => {
-            result.cpuload = Math.round(data.currentload)
+            result.cpuload = Math.round(data.currentLoad)
             smi(function (err, data) {
                 if (err) {
                     result.nvidia = false
